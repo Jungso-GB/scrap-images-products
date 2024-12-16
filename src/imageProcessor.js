@@ -7,25 +7,47 @@ const REVIEW_DIR = './images/a_controler';
 
 // Vérification si le fond est majoritairement blanc
 async function hasWhiteBackground(imagePath) {
-    const image = sharp(imagePath);
-    const { data, info } = await image.raw().toBuffer({ resolveWithObject: true });
+    // Redimensionner l'image pour accélérer le traitement
+    const resizedImageBuffer = await sharp(imagePath)
+        .resize({ width: 100, height: 100, fit: 'cover' }) // Réduire à 100x100 pixels
+        .toBuffer();
 
-    let whitePixelCount = 0;
-    const totalPixels = info.width * info.height;
+    // Charger les pixels de l'image redimensionnée
+    const { data, info } = await sharp(resizedImageBuffer).raw().toBuffer({ resolveWithObject: true });
 
-    // Seuil pour considérer un pixel comme blanc (valeurs RGB proches de 255)
-    const WHITE_THRESHOLD = 240;
+    let totalRed = 0, totalGreen = 0, totalBlue = 0;
+    let borderPixelCount = 0;
 
-    for (let i = 0; i < data.length; i += 3) {
-        const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
-        if (r > WHITE_THRESHOLD && g > WHITE_THRESHOLD && b > WHITE_THRESHOLD) {
-            whitePixelCount++;
+    const margin = 5; // Zone de bord en pixels (haut, bas, gauche, droite)
+
+    for (let y = 0; y < info.height; y++) {
+        for (let x = 0; x < info.width; x++) {
+            const index = (y * info.width + x) * 3;
+            const [r, g, b] = [data[index], data[index + 1], data[index + 2]];
+
+            // Vérifier si le pixel est sur les bords
+            if (
+                x < margin || x >= info.width - margin || // Bord gauche ou droit
+                y < margin || y >= info.height - margin  // Bord haut ou bas
+            ) {
+                totalRed += r;
+                totalGreen += g;
+                totalBlue += b;
+                borderPixelCount++;
+            }
         }
     }
 
-    const whiteRatio = whitePixelCount / totalPixels;
-    return whiteRatio > 0.95; // Considérer l'image comme ayant un fond blanc si 95% des pixels sont blancs
+    // Calculer la moyenne des couleurs des bords
+    const avgRed = totalRed / borderPixelCount;
+    const avgGreen = totalGreen / borderPixelCount;
+    const avgBlue = totalBlue / borderPixelCount;
+
+    // Considérer comme blanc si chaque canal est supérieur à un seuil
+    const WHITE_THRESHOLD = 200; // Ajuster selon les besoins
+    return avgRed >= WHITE_THRESHOLD && avgGreen >= WHITE_THRESHOLD && avgBlue >= WHITE_THRESHOLD;
 }
+
 
 // Suppression d’arrière-plan en dernier recours
 async function processImage(imagePath, filename) {

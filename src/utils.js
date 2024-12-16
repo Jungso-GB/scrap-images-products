@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
-const { parse, stringify } = require('json2csv');
+const { Parser, stringify } = require('json2csv');
+
 
 // Charger l'état de progression
 function loadProgress(progressFile) {
@@ -13,15 +14,32 @@ function saveProgress(progressFile, progress) {
 
 // Générer un rapport
 function generateReport(products, progress, reportFile) {
-    const report = products.map(product => ({
-        reference: product.refInterne,
-        nom: product.nomComplet,
-        status: progress[product.refInterne]?.success ? 'Succès' : 'Échec',
-        error: progress[product.refInterne]?.error || ''
-    }));
+    // Préparer les données pour le rapport
+    const report = products.map(product => {
+        const { codeArticle, refFabricant, nomComplet, raisonFabricant } = product;
+        const status = progress[product.codeArticle]?.success ? 'Succès' : 'Échec';
+        const error = progress[product.codeArticle]?.error || '';
+        const backgroundRemoved = progress[product.codeArticle]?.backgroundRemoved ? 'Oui' : 'Non';
 
-    const csv = stringify(report);
-    fs.writeFileSync(reportFile, csv);
+        return {
+            codeArticle,
+            refFabricant,
+            nomComplet,
+            raisonFabricant,
+            status,
+            backgroundRemoved,
+            error
+        };
+    });
+
+    // Convertir en CSV
+    const json2csvParser = new Parser();
+    const csv = json2csvParser.parse(report);
+
+    // Sauvegarder le fichier
+    fs.writeFileSync(reportFile, csv, 'utf8');
+    console.log(`Rapport généré avec succès : ${reportFile}`);
 }
+
 
 module.exports = { loadProgress, saveProgress, generateReport };
