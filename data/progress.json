@@ -6,5 +6,237 @@
   "S0498790": {
     "success": true,
     "skipped": true
+  },
+  "S0518540": {
+    "success": true,
+    "skipped": true
+  },
+  "S0520140": {
+    "success": true,
+    "skipped": true
+  },
+  "S0521150": {
+    "success": true,
+    "skipped": true
+  },
+  "S0526560": {
+    "success": true,
+    "skipped": true
+  },
+  "S0526630": {
+    "success": true,
+    "skipped": true
+  },
+  "S0534940": {
+    "success": true,
+    "skipped": true
+  },
+  "S0544310": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545630": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545650": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545730": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545740": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545850": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545860": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545870": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545880": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545890": {
+    "success": false,
+    "error": "net::ERR_CONNECTION_CLOSED at https://www.google.com/search?tbm=isch&q=LNA4802M2AR%20LLL%20FONCTIONS%2020%2F80%20LEGRAND"
+  },
+  "S0545900": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545910": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545920": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545930": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545940": {
+    "success": true,
+    "skipped": true
+  },
+  "S0545950": {
+    "success": false,
+    "error": "net::ERR_CONNECTION_CLOSED at https://www.google.com/search?tbm=isch&q=LN4040%20LLL%20AUTRES%20FONCTIONS%20LEGRAND"
+  },
+  "S0546070": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546410": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546420": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546430": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546440": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546450": {
+    "success": true,
+    "skipped": true
+  },
+  "S0546650": {
+    "success": true,
+    "skipped": true
+  },
+  "S0554970": {
+    "success": true,
+    "skipped": true
+  },
+  "S0555410": {
+    "success": true,
+    "skipped": true
+  },
+  "S0555690": {
+    "success": false,
+    "error": "EBUSY: resource busy or locked, unlink 'C:\\Users\\BGREGO~1\\AppData\\Local\\Temp\\puppeteer_dev_chrome_profile-QZMG1z\\first_party_sets.db'"
+  },
+  "S0555720": {
+    "success": true,
+    "skipped": true
+  },
+  "S0555730": {
+    "success": true,
+    "skipped": true
+  },
+  "S0555740": {
+    "success": true,
+    "skipped": true
+  },
+  "S0557360": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558610": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558620": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558630": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558640": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558650": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558660": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558670": {
+    "success": true,
+    "skipped": true
+  },
+  "S0558680": {
+    "success": true,
+    "skipped": true
+  },
+  "S0562720": {
+    "success": true,
+    "skipped": true
+  },
+  "S0562740": {
+    "success": true,
+    "skipped": true
+  },
+  "S0562900": {
+    "success": true,
+    "skipped": true
+  },
+  "S0562970": {
+    "success": true,
+    "skipped": true
+  },
+  "S0563090": {
+    "success": true,
+    "skipped": true
+  },
+  "S0563100": {
+    "success": true,
+    "skipped": true
+  },
+  "S0598970": {
+    "success": true,
+    "skipped": true
+  },
+  "S0600890": {
+    "success": true,
+    "skipped": true
+  },
+  "S0601010": {
+    "success": true,
+    "skipped": true
+  },
+  "S0601020": {
+    "success": true,
+    "skipped": true
+  },
+  "S0601030": {
+    "success": true,
+    "skipped": true
+  },
+  "S0610840": {
+    "success": true,
+    "skipped": true
+  },
+  "S0626300": {
+    "success": true,
+    "skipped": true
+  },
+  "S0626320": {
+    "success": true,
+    "skipped": true
   }
 }

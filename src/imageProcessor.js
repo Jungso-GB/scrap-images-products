@@ -8,44 +8,42 @@ const REVIEW_DIR = './images/a_controler';
 // Vérification si le fond est majoritairement blanc
 async function hasWhiteBackground(imagePath) {
     // Redimensionner l'image pour accélérer le traitement
-    const resizedImageBuffer = await sharp(imagePath)
-        .resize({ width: 100, height: 100, fit: 'cover' }) // Réduire à 100x100 pixels
+    const resizedBuffer = await sharp(imagePath)
+        .resize({ width: 50, height: 50, fit: 'cover' }) // Réduction pour analyse rapide
         .toBuffer();
 
-    // Charger les pixels de l'image redimensionnée
-    const { data, info } = await sharp(resizedImageBuffer).raw().toBuffer({ resolveWithObject: true });
+    // Charger les pixels redimensionnés en format brut
+    const { data, info } = await sharp(resizedBuffer).raw().toBuffer({ resolveWithObject: true });
 
-    let totalRed = 0, totalGreen = 0, totalBlue = 0;
-    let borderPixelCount = 0;
+    const WHITE_THRESHOLD = 240; // Seuil pour considérer un pixel "proche du blanc"
+    const margin = 5; // Largeur des bords à analyser
 
-    const margin = 5; // Zone de bord en pixels (haut, bas, gauche, droite)
+    let whitePixels = 0;
+    let totalBorderPixels = 0;
 
     for (let y = 0; y < info.height; y++) {
         for (let x = 0; x < info.width; x++) {
-            const index = (y * info.width + x) * 3;
-            const [r, g, b] = [data[index], data[index + 1], data[index + 2]];
+            const idx = (y * info.width + x) * 3; // Chaque pixel = 3 valeurs (R, G, B)
+            const [r, g, b] = [data[idx], data[idx + 1], data[idx + 2]];
 
-            // Vérifier si le pixel est sur les bords
-            if (
-                x < margin || x >= info.width - margin || // Bord gauche ou droit
-                y < margin || y >= info.height - margin  // Bord haut ou bas
-            ) {
-                totalRed += r;
-                totalGreen += g;
-                totalBlue += b;
-                borderPixelCount++;
+            // Si le pixel est dans les bords
+            if (x < margin || x >= info.width - margin || y < margin || y >= info.height - margin) {
+                totalBorderPixels++;
+
+                // Vérifier si le pixel est proche du blanc
+                if (r >= WHITE_THRESHOLD && g >= WHITE_THRESHOLD && b >= WHITE_THRESHOLD) {
+                    whitePixels++;
+                }
             }
         }
     }
 
-    // Calculer la moyenne des couleurs des bords
-    const avgRed = totalRed / borderPixelCount;
-    const avgGreen = totalGreen / borderPixelCount;
-    const avgBlue = totalBlue / borderPixelCount;
+    // Calcul du ratio de pixels blancs sur les bords
+    const whiteRatio = whitePixels / totalBorderPixels;
+    console.log(`Ratio de pixels blancs : ${(whiteRatio * 100).toFixed(2)}%`);
 
-    // Considérer comme blanc si chaque canal est supérieur à un seuil
-    const WHITE_THRESHOLD = 200; // Ajuster selon les besoins
-    return avgRed >= WHITE_THRESHOLD && avgGreen >= WHITE_THRESHOLD && avgBlue >= WHITE_THRESHOLD;
+    // Retourner true si plus de 90% des pixels des bords sont blancs
+    return whiteRatio > 0.9;
 }
 
 
